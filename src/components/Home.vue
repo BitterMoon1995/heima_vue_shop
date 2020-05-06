@@ -18,16 +18,19 @@
           :unique-opened='false'
           :collapse="isCollapse"
           :collapse-transition="false"
+          :default-active="activeIndex"
           router>
           <!--          设置可以同时打开多个二级菜单-->
 
+<!--          一级菜单-->
           <el-submenu v-for="item in menus" :key="item.id" :index="item.id.toString()">
             <template slot="title">
               <i :class="iconsObj[item.id]"></i>
               <span>{{item.name}}</span>
             </template>
-
-            <el-menu-item v-for="subItem in item.children" :index="subItem.path" :key="subItem.id">
+<!--            二级菜单-->
+            <el-menu-item v-for="subItem in item.children" :index="subItem.path"
+                          :key="subItem.id" @click="saveActiveState(subItem.path)">
               <template>
                 <i class="el-icon-minus"></i>
                 <span>{{subItem.name}}</span>
@@ -48,7 +51,9 @@
   export default {
     created() {
       //页面创建，获取所有菜单
-      this.getMenus()
+      this.getMenus(),
+      //使页面刷新后二级菜单的激活状态不丢失
+      this.activeIndex=window.sessionStorage.getItem('activeIndex')
     },
     data() {
       return {
@@ -58,7 +63,10 @@
           '2':'iconfont icon-yonghuguanli',
           '3':'iconfont icon-hezuo\n'
         },
-        isCollapse:false
+        //控制导航栏折叠
+        isCollapse:false,
+        //被选中的二级菜单
+        activeIndex:''
       }
     },
     methods: {
@@ -72,6 +80,10 @@
       },
       toggleMenu(){
         this.isCollapse=!this.isCollapse
+      },
+      saveActiveState(activeIndex){
+        window.sessionStorage.setItem('activeIndex',activeIndex)
+        this.activeIndex=activeIndex
       }
     }
   }

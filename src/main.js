@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-//引入阿里图标库、
+//引入阿里图标库
 import './assets/css/iconfont/iconfont.css'
 //导入饿了么
 // import './plugins/element.js'
@@ -28,6 +28,7 @@ axios.interceptors.request.use(config=>{
   config.headers.Authorization=window.sessionStorage.getItem('token')
   return config
 })
+//
 
 Vue.config.productionTip = false
 
