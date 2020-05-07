@@ -14,30 +14,31 @@
         <!--        搜索框-->
         <el-col :span="6">
           <div>
-            <el-input placeholder="请输入内容">
-              <el-button slot="append" icon="el-icon-search"></el-button>
+<!--            可清除输入框-->
+            <el-input placeholder="请输入内容" v-model="username" clearable @clear="clear">
+              <el-button slot="append" icon="el-icon-search" @click="searchUser"></el-button>
             </el-input>
           </div>
         </el-col>
         <!--        添加按钮-->
         <el-col :span="4">
-          <el-button type="primary">添加用戶</el-button>
+          <el-button type="primary" @click="dialogVisible=true">添加用戶</el-button>
         </el-col>
       </el-row>
       <!--      表格区-->
-      <el-table :data="showList" border>
+      <el-table :data="userList" border>
         <!--        索引列-->
         <el-table-column type="index"></el-table-column>
         <el-table-column label="姓名" prop="username"></el-table-column>
         <el-table-column label="电话" prop="phone"></el-table-column>
         <el-table-column label="角色" prop="role"></el-table-column>
         <!--        bool值处理-->
-        <el-table-column label="状态">
+        <el-table-column label="激活">
           <!--        通过作用域插槽得到本行的数据-->
           <template v-slot="data">
             <!--            {{Object.keys(data)}}-->
-            <el-switch
-              v-model="data.row.state"
+            <el-switch @change="handleSwitch(data.row)"
+              v-model="data.row.activated"
               active-color="#13ce66"
               inactive-color="#DCE0E4">
             </el-switch>
@@ -65,13 +66,29 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="queryParams.pageNum"
-          :page-sizes="[5, 10, 20]"
+          :page-sizes="[1, 5, 10, 20]"
           :page-size="queryParams.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="userCount">
+          :total="total">
+<!--          没有总条目数就无法正常分页，全部死妈-->
         </el-pagination>
       </div>
     </el-card>
+    <!--    添加layout对话框-->
+    <el-dialog
+      title="添加用户"
+      :visible.sync="dialogVisible"
+      width="30%">
+<!--      内容主体区-->
+      <el-form>
+
+      </el-form>
+<!--      底部区-->
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -84,41 +101,63 @@
       return {
         queryParams: {
           pageNum: 1,
-          pageSize: 5
+          pageSize: 5,
+          condition: ''
         },
         userList: [],
         showList: [],
-        userCount: 0
+        userCount: 0,
+        total: 0,
+        username: '',
+        dialogVisible:false
       }
     },
     methods: {
-      getUserList() {
+      async getUserList() {
         //分页查询所有用户
-        this.axios.get('/user/getAll', {
+        await this.axios.get('/user/getAll', {
           params: this.queryParams
         })
           .then(result => {
-            let {data} = result
-            this.userList = data
+            console.log(result)
+            let {userList,total} = result.data
 
-            data.forEach(function (item) {
+            userList.forEach(function (item) {
               if (item.role === 'admin') item.role = '超级管理员'
               if (item.role === 'manager') item.role = '管理员'
               if (item.role === 'client') item.role = '客户'
             })
 
-            this.showList = data
-            this.userCount = data.length
+            this.userList = userList
+            this.total = total
+
           })
       },
       //监听每页要显示的条目数的变化
       handleSizeChange(newSize){
+        console.log(newSize)
         this.queryParams.pageSize=newSize
         this.getUserList()
       },
       //监听页码值改变
       handleCurrentChange(newPage){
         console.log(newPage)
+        this.queryParams.pageNum=newPage
+        this.getUserList()
+      },
+      //监听switch开关变化
+      handleSwitch(currentData){
+        this.axios.post('/user/update',currentData)
+      },
+      //搜索
+      searchUser(){
+        this.queryParams.condition=this.username
+        this.getUserList()
+      },
+      //清空搜索框的同时重新加载表格
+      clear(){
+        this.queryParams.condition=''
+        this.getUserList()
       }
     }
 
