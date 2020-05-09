@@ -69,7 +69,8 @@
             // 获取并存贮token到sessionStorage中（存活于当前会话）
             let token=data.data
             window.sessionStorage.setItem('token',token)
-            //
+            window.sessionStorage.setItem('username',this.form.username)
+            //编程式路由
             this.$router.push('/home')
           }
         })
