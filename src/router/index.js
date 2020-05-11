@@ -5,6 +5,7 @@ import Home from "../components/Home"
 import Welcome from "../components/Welcome"
 import Authorization from "../components/user/Authorization"
 import Scene from "../components/project/Scene";
+import IntroImgs from "../components/project/components/IntroImgs";
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,13 @@ const routes = [
     redirect: '/welcome',
     children: [
       {path: '/welcome', component: Welcome},
-      {path: '/authorization', component: Authorization},
+      {
+        path: '/authorization',
+        component: Authorization,
+        children: [
+          {path: '/introImgs', component: IntroImgs}
+        ]
+      },
       {path: '/scene', component: Scene}
     ]
   }

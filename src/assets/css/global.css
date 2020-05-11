@@ -15,3 +15,10 @@ html,body,#app{
 .el-pagination{
     margin-top: 20px;
 }
+.el-upload-dragger{
+    width: 146px;
+    height: 146px;
+}
+.el-upload-list__item-actions{
+    width: 300px;
+}
