@@ -66,7 +66,8 @@
 
 <script>
   import axios from "axios"
-  import IntroImgs from "./components/IntroImgs";
+  import IntroImgs from "./components/IntroImgs"
+  import {mapGetters, mapState,mapActions,mapMutations} from "vuex"
 
   export default {
     components: {IntroImgs},
@@ -84,7 +85,7 @@
           slogan:'',
           username:this.username,
           location:'',
-
+          // introImgs:this.$store.state.IntroImgs.introImgs, 不行，在vue实例创建后只会初始化一次
           introImgs:[],
           postcard:null,
           swiper:null,
@@ -148,12 +149,15 @@
             top:false
           })
         })
-        console.log(this.addForm.introImgs)
       },
-      intro(data){
-        console.log(data)
+    },
+    //★★★用组件的watch属性将data中的数据和vuex中的数据同步
+    //不要加this！！！
+    watch: {
+      '$store.state.IntroImgs.sceneIntros'(){
+        this.introImgs=this.$store.state.IntroImgs.sceneIntros
+        console.log(this.introImgs)
       }
-
     }
   }
 </script>

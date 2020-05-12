@@ -8,7 +8,7 @@
       :on-remove="handleRemove"
       :on-change="handleChange"
       :on-success="handleSuccess"
-      :limit="6"
+      :limit="1"
       :file-list="fileList"
       :drag="true"
       :before-upload="beforeUpload"
@@ -23,14 +23,14 @@
 </template>
 
 <script>
-  import {mapGetters, mapState,mapActions,mapMutations} from "vuex"
+  import {mapGetters, mapState, mapActions, mapMutations} from "vuex"
 
   export default {
     data() {
       return {
         fileList: [],
 
-        introImgs: [],
+        postcard: null,
 
         dialogImageUrl: '',
         dialogVisible: false,
@@ -51,10 +51,11 @@
           type:'swiper',
           top:false
         })
-        this.transmit(this.introImgs)
+        this.postcard=this.introImgs[0]
+        this.transmit(this.postcard)
       },
       ...mapActions({
-        transmit:'IntroImgs/setSceneIntros'
+        transmit:'Postcard/setPostcard'
       }),
 
       handleRemove(file, fileList) {
@@ -67,6 +68,7 @@
             top:false
           })
         })
+        this.postcard=null
       },
       beforeUpload(file, fileList){
         const isJPG = file.type === 'image/jpeg'
@@ -84,10 +86,9 @@
         return isJPG && isLt2M;
       }
     }
-
   }
 </script>
 
-<style scoped lang="less">
+<style scoped>
 
 </style>
