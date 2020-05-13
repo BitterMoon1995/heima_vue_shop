@@ -24,6 +24,7 @@
 
 <script>
   import {mapGetters, mapState,mapActions,mapMutations} from "vuex"
+  import imgSize from "../../../utils/imgSize";
 
   export default {
     data() {
@@ -34,7 +35,6 @@
 
         dialogImageUrl: '',
         dialogVisible: false,
-
       }
     },
     methods:{
@@ -48,7 +48,7 @@
         this.introImgs.push({
           name:file.name,
           src:file.response,
-          type:'swiper',
+          type:'intros',
           top:false
         })
         this.transmit(this.introImgs)
@@ -58,30 +58,48 @@
       }),
 
       handleRemove(file, fileList) {
+        this.transmit(null)
         this.introImgs = []
         fileList.forEach(file => {
           this.introImgs.push({
             name:file.name,
             src:file.response,
-            type:'swiper',
+            type:'intros',
             top:false
           })
         })
+        this.transmit(this.introImgs)
       },
+
       beforeUpload(file, fileList){
-        const isJPG = file.type === 'image/jpeg'
-        const isPNG = file.type === 'image/jpng'
+        const isJPG = file.type === 'image/jpg'
+        const isJPEG = file.type === 'image/jpeg'
+        const isPNG = file.type === 'image/png'
 
         const isLt2M = file.size / 1024 / 1024 < 2;
 
-        if (!isJPG&&!isPNG) {
-          this.$message.error('上传图片只能是 JPG或PNG 格式!');
+        if (!isJPG && !isPNG && !isJPEG) {
+          this.$message.error('上传图片只能是 JPG 或 PNG 格式!');
+          return false
         }
 
         if (!isLt2M) {
           this.$message.error('上传图片大小不能超过 2MB!');
+          return false
         }
-        return isJPG && isLt2M;
+
+        let legalSize
+        imgSize(file)
+          .then(
+            (valid) => {},
+            (valid) => legalSize=valid
+          )
+        if (legalSize===false){
+          this.$message.error('上传尺寸错误!');
+          return false
+        }
+
+        return true
       }
     }
 

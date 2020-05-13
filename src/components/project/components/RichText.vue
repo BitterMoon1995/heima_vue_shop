@@ -31,10 +31,10 @@
       return {
         fileList: [],
 
-        postcard: {
+        richText: {
           name: '',
           src: '',
-          type: 'postcard',
+          type: 'richText',
           top: false
         },
 
@@ -44,7 +44,7 @@
     },
     methods: {
       ...mapActions({
-        transmit: 'Postcard/setPostcard'
+        transmit: 'RichText/setRichText'
       }),
 
       handlePictureCardPreview(file) {
@@ -54,14 +54,13 @@
       handleChange(file, fileList) {
       },
       handleSuccess(response, file) {
-        this.postcard.name = file.name
-        this.postcard.src = file.response
-        this.transmit(this.postcard)
+        this.richText.name = file.name
+        this.richText.src = file.response
+        this.transmit(this.richText)
       },
-
       handleRemove(file, fileList) {
-        this.postcard.src = ''
-        this.postcard.name = ''
+        this.richText.src = ''
+        this.richText.name = ''
         //引用对象的改变，是指向对象改变，指向不变，只改那个对象的属性值，是监听不到的
         this.transmit(null)
       },

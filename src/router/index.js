@@ -5,7 +5,6 @@ import Home from "../components/Home"
 import Welcome from "../components/Welcome"
 import Authorization from "../components/user/Authorization"
 import Scene from "../components/project/Scene";
-import IntroImgs from "../components/project/components/IntroImgs";
 
 Vue.use(VueRouter)
 
@@ -22,12 +21,12 @@ const routes = [
       {path: '/welcome', component: Welcome},
       {
         path: '/authorization',
-        component: Authorization,
-        children: [
-          {path: '/introImgs', component: IntroImgs}
-        ]
+        component: Authorization
       },
-      {path: '/scene', component: Scene}
+      {
+        path: '/scene',
+        component: Scene
+      }
     ]
   }
 ]
@@ -39,9 +38,9 @@ const router = new VueRouter({
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
   //访问登录页，直接放行
-  if (to.path==='/login') return next()
+  if (to.path === '/login') return next()
   //访问权限页，则先尝试提取token
-  let token=window.sessionStorage.getItem('token')
+  let token = window.sessionStorage.getItem('token')
   //无token，重定向到登录页
   if (!token) return next('/login')
   //有token，放行

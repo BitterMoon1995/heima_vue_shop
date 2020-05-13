@@ -31,22 +31,20 @@
       return {
         fileList: [],
 
-        postcard: {
+        swiper: {
           name: '',
           src: '',
-          type: 'postcard',
           top: false
         },
 
         dialogImageUrl: '',
-        dialogVisible: false,
+        dialogVisible: false
       }
     },
     methods: {
       ...mapActions({
-        transmit: 'Postcard/setPostcard'
+        transmit: 'Swiper/setSwiper'
       }),
-
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
@@ -54,14 +52,13 @@
       handleChange(file, fileList) {
       },
       handleSuccess(response, file) {
-        this.postcard.name = file.name
-        this.postcard.src = file.response
-        this.transmit(this.postcard)
+        this.swiper.name = file.name
+        this.swiper.src = file.response
+        this.transmit(this.swiper)
       },
-
       handleRemove(file, fileList) {
-        this.postcard.src = ''
-        this.postcard.name = ''
+        this.swiper.src = ''
+        this.swiper.name = ''
         //引用对象的改变，是指向对象改变，指向不变，只改那个对象的属性值，是监听不到的
         this.transmit(null)
       },
