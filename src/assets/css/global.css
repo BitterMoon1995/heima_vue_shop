@@ -22,3 +22,7 @@ html,body,#app{
 .el-upload-list__item-actions{
     width: 300px;
 }
+/*解决el-table表头和表列对不齐的问题*/
+body .el-table th.gutter{
+    display: table-cell!important;
+}
