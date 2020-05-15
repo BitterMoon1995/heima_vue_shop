@@ -82,7 +82,7 @@
       :visible.sync="dialogVisible"
       width="30%" @close="addDialogClose">
       <!--      内容主体区-->
-      <el-form :model="addForm" :rules="addRules" ref="addFormRef" label-width="100px" class="demo-ruleForm">
+      <el-form :model="addForm" :rules="addRules" ref="addFormRef" label-width="100px">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="addForm.username"></el-input>
         </el-form-item>
@@ -234,7 +234,6 @@
             this.userList = userList
             this.total = total
 
-            console.log(result.data)
           })
       },
       //打开页面、增删改后，都要通过神之操作重置表的顺序，永远滴神！！！
@@ -270,18 +269,22 @@
         this.$refs.addFormRef.resetFields()
       },
       addUser() {
-        let validResult
         this.$refs.addFormRef.validate(async valid=> {
           //先校验
-          validResult = valid
-          if (validResult===false) return
+          if (valid===false) {
+            this.$message.error('请检查输入信息！')
+            return
+          }
           //校验通过发请求
           if (this.addForm.role === '超级管理员') this.addForm.role = 1
           if (this.addForm.role === '管理员') this.addForm.role = 2
           if (this.addForm.role === '客户') this.addForm.role = 3
           const {data}=await this.axios.post('/user/add',this.addForm)
           //后端校验用户名，存在则失败，弹出消息
-          if (data.info.code===400) this.$message.error(data.info.msg)
+          if (data.info.code===400) {
+            this.$message.error(data.info.msg)
+            return
+          }
           //成功
           if (data.info.code===200) {
             this.$message.success(data.info.msg)
@@ -314,7 +317,6 @@
       },
       //展示编辑用户的对话框
       showEditDialog(raw){
-        console.log(raw)
         this.editDialogVisible=true
         this.editForm=raw
       },

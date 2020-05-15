@@ -55,7 +55,10 @@
         this.$refs.formRef.validate((valid,obj)=>{
           validResult=valid
         })
-        if (!validResult) return
+        if (!validResult) {
+          this.$message.error('请检查输入信息！')
+          return
+        }
         this.axios.post('/user/login',this.form)
         .then(result=>{
           let {msg,code}=result.data.info
