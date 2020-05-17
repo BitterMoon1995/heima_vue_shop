@@ -13,7 +13,8 @@
       :drag="true"
       :before-upload="beforeUpload"
       multiple>
-      <i class="el-icon-plus"></i>
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过512KB</div>
     </el-upload>
     <!--        预览弹出框-->
     <el-dialog :visible.sync="dialogVisible">
@@ -27,6 +28,9 @@
   import imgSize from "../../../utils/imgSize";
 
   export default {
+    destroyed() {
+      this.fileList=[]
+    },
     data() {
       return {
         fileList: [],
@@ -74,9 +78,9 @@
           return false
         }
 
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isLt2M = file.size / 1024 / 1024 < 0.5;
         if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 2MB!');
+          this.$message.error('上传图片大小不能超过 512KB!');
           return false
         }
 

@@ -26,3 +26,11 @@ html,body,#app{
 body .el-table th.gutter{
     display: table-cell!important;
 }
+.el-form-item__label{
+    width: 120px!important;
+    margin-right: 15px!important;
+}
+.el-upload__tip{
+    margin-top: 0px!important;
+    padding-left: 34px!important;
+}

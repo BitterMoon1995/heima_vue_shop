@@ -5,6 +5,8 @@ import Home from "../components/Home"
 import Welcome from "../components/Welcome"
 import Authorization from "../components/user/Authorization"
 import Scene from "../components/project/Scene";
+import Route from "../components/project/Route";
+import Activity from "../components/project/Activity";
 
 Vue.use(VueRouter)
 
@@ -26,6 +28,14 @@ const routes = [
       {
         path: '/scene',
         component: Scene
+      },
+      {
+        path: '/route',
+        component: Route
+      },
+      {
+        path: '/activity',
+        component: Activity
       }
     ]
   }

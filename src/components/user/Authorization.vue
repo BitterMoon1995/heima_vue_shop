@@ -10,9 +10,9 @@
     <!--    卡片-->
     <el-card class="box-card">
       <!--      搜索与添加区-->
-      <el-row :gutter="20">
+      <el-row :gutter="0">
         <!--        搜索框-->
-        <el-col :span="6">
+        <el-col :span="5">
           <div>
             <!--            可清除输入框-->
             <el-input placeholder="请输入内容" v-model="username" clearable @clear="clear">
@@ -354,5 +354,7 @@
 </script>
 
 <style scoped lang="less">
-
+  .el-input {
+    width: 420px;
+  }
 </style>

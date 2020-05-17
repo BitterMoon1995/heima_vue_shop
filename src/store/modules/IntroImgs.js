@@ -1,5 +1,5 @@
 const state = {
-  sceneIntros: []
+  intros: []
 }
 const getters = {
   getIntros(state) {
@@ -7,13 +7,13 @@ const getters = {
   }
 }
 const mutations = {
-  setSceneIntros(state, payload) {
-    state.sceneIntros=payload
+  setIntros(state, payload) {
+    state.intros=payload
   }
 }
 const actions = {
-  setSceneIntros({commit}, payload) {
-    commit('setSceneIntros',payload)
+  setIntros({commit}, payload) {
+    commit('setIntros',payload)
   }
 }
 
