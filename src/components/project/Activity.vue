@@ -73,7 +73,7 @@
           <postcard v-if="refresh"></postcard>
         </el-form-item>
         <el-form-item label="首页展示图">
-          <swiper v-if="refresh"></swiper>
+          <slider v-if="refresh"></slider>
         </el-form-item>
         <el-form-item label="详情页轮播图">
           <intro-imgs v-if="refresh"></intro-imgs>
@@ -105,12 +105,12 @@
           <postcard v-if="refresh"></postcard>
         </el-form-item>
         <el-form-item label="首页展示图">
-          <swiper v-if="refresh"></swiper>
+          <slider v-if="refresh"></slider>
         </el-form-item>
         <el-form-item label="详情页轮播图">
           <intro-imgs v-if="refresh"></intro-imgs>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="详情页长图">
           <rich-text v-if="refresh"></rich-text>
         </el-form-item>
       </el-form>
@@ -128,13 +128,13 @@
   import axios from "axios"
   import IntroImgs from "./components/IntroImgs"
   import Postcard from "./components/Postcard"
-  import Swiper from "./components/Swiper"
+  import Slider from "./components/Slider"
   import RichText from "./components/RichText";
 
   export default {
-    components: {IntroImgs, Postcard, Swiper, RichText},
+    components: {IntroImgs, Postcard, Slider, RichText},
     created() {
-      axios.defaults.baseURL="http://localhost:2021/mini/activity"
+      axios.defaults.baseURL="http://localhost:2020/mini/activity"
       this.getActivityList()
     },
     data() {
@@ -151,7 +151,7 @@
           // introImgs:this.$store.state.IntroImgs.introImgs, 不行，在vue实例创建后只会初始化一次
           introImgs: [],
           postcard: null,
-          swiper: null,
+          slider: null,
           richText: null
         },
         refresh:true,
@@ -166,7 +166,7 @@
           // introImgs:this.$store.state.IntroImgs.introImgs, 不行，在vue实例创建后只会初始化一次
           introImgs: [],
           postcard: null,
-          swiper: null,
+          slider: null,
           richText: null
         },
 
@@ -208,7 +208,7 @@
       },
       addActivity() {
         this.$refs.addActivityRef.validate(async valid=>{
-          if (!valid || this.addForm.swiper==null || this.addForm.richText==null
+          if (!valid || this.addForm.slider==null || this.addForm.richText==null
             || this.addForm.postcard==null || this.addForm.introImgs==null){
             this.$message.error('请检查录入信息！')
             return
@@ -256,6 +256,11 @@
           if (data.info.code===200) {
             this.$message.success(data.info.msg)
             this.editDialog = false
+            this.$refs.editFormRef.resetFields()
+            this.refresh=false
+            this.$nextTick(() => {
+              this.refresh = true
+            })
             await this.getActivityList()
           }
         })
@@ -321,9 +326,9 @@
         this.addForm.postcard = this.$store.state.Postcard.postcard
         this.editForm.postcard = this.$store.state.Postcard.postcard
       },
-      '$store.state.Swiper.swiper'() {
-        this.addForm.swiper = this.$store.state.Swiper.swiper
-        this.editForm.swiper = this.$store.state.Swiper.swiper
+      '$store.state.Slider.slider'() {
+        this.addForm.slider = this.$store.state.Slider.slider
+        this.editForm.slider = this.$store.state.Slider.slider
       },
       '$store.state.RichText.richText'() {
         this.addForm.richText = this.$store.state.RichText.richText

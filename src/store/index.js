@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 //引入子模块
 import IntroImgs from "./modules/IntroImgs";
 import Postcard from "./modules/Postcard";
-import Swiper from "./modules/Swiper";
+import Slider from "./modules/Slider";
 import RichText from "./modules/RichText";
 
 Vue.use(Vuex)
@@ -22,7 +22,7 @@ export default new Vuex.Store({
   modules: {
     IntroImgs,
     Postcard,
-    Swiper,
+    Slider,
     RichText
   },
   getters: {

@@ -65,6 +65,7 @@
         //引用对象的改变，是指向对象改变，指向不变，只改那个对象的属性值，是监听不到的
         this.transmit(null)
       },
+      //类型、大小、尺寸校验
       beforeUpload(file) {
         const isJPG = file.type === 'image/jpg'
         const isPNG = file.type === 'image/png'

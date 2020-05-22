@@ -4,7 +4,8 @@ import router from './router'
 import store from './store'
 //引入阿里图标库
 import './assets/css/iconfont/iconfont.css'
-
+import './assets/css/font_0se29rc0hdg9/iconfont.css'
+import './assets/css/font_v5zvv6kz0yc/iconfont.css'
 //  手动配置饿了么
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -20,7 +21,7 @@ import './assets/css/global.css'
 //导入axios
 import axios from 'axios'
 Vue.prototype.axios = axios
-axios.defaults.baseURL='http://localhost:2020/evenstar'
+// axios.defaults.baseURL='http://localhost:2020/evenstar'
 
 //配置请求拦截器，将token添加到请求头的字段
 axios.interceptors.request.use(config=>{

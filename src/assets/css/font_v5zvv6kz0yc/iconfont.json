@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "657523",
+      "name": "分期－手机",
+      "font_class": "shouji",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    }
+  ]
+}

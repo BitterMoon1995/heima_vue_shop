@@ -25,7 +25,7 @@
 <!--          一级菜单-->
           <el-submenu v-for="item in menus" :key="item.id" :index="item.id.toString()">
             <template slot="title">
-              <i :class="iconsObj[item.id]"></i>
+              <i :class="iconsObj[item.id]" style="font-size: 20px"></i>
               <span>{{item.name}}</span>
             </template>
 <!--            二级菜单-->
@@ -61,7 +61,9 @@
         iconsObj:{
           '1':'iconfont icon-xiangmuguanli-',
           '2':'iconfont icon-yonghuguanli',
-          '3':'iconfont icon-hezuo\n'
+          '3':'iconfont icon-hezuo',
+          '4':'iconfont icon-zhiding',
+          '5':'iconfont icon-shouji\n'
         },
         //控制导航栏折叠
         isCollapse:false,
@@ -75,7 +77,7 @@
         this.$router.push('/login')
       },
       async getMenus(){
-        const {data}=await this.axios.get('/menu/getAll')
+        const {data}=await this.axios.get('http://localhost:2020/evenstar/menu/getAll')
         this.menus=data
       },
       toggleMenu(){
@@ -138,5 +140,9 @@
     background-color: #4a5064;
     color: white;
     text-align: center;
+  }
+
+  .iconfont{
+    font-size: larger;
   }
 </style>

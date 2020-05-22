@@ -31,6 +31,13 @@
   export default {
     data() {
       return {
+        calendar:{
+          date:'四月廿八',
+          year:'庚子',
+          solarTerm:'小满'
+        },
+
+
         fileList: [],
 
         introImgs: [],
@@ -51,7 +58,7 @@
           name:file.name,
           src:file.response,
           type:'intros',
-          top:false
+          top:false,
         })
         this.transmit(this.introImgs)
       },

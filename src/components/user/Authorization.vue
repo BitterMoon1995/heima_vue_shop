@@ -4,8 +4,8 @@
     <!--  面包屑导航区-->
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>权限管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+      <el-breadcrumb-item>置顶管理</el-breadcrumb-item>
+      <el-breadcrumb-item>首页楼层图</el-breadcrumb-item>
     </el-breadcrumb>
     <!--    卡片-->
     <el-card class="box-card">
@@ -219,7 +219,7 @@
     methods: {
       async getUserList() {
         //分页查询所有用户
-        await this.axios.get('/user/getAll', {
+        await this.axios.get('http://localhost:2020/evenstar/user/getAll', {
           params: this.queryParams
         })
           .then(result => {
@@ -238,7 +238,7 @@
       },
       //打开页面、增删改后，都要通过神之操作重置表的顺序，永远滴神！！！
       resetOrder(){
-        this.axios.get('/user/resetOrder')
+        this.axios.get('http://localhost:2020/evenstar/user/resetOrder')
       },
       //监听每页要显示的条目数的变化
       handleSizeChange(newSize) {
@@ -252,7 +252,7 @@
       },
       //监听switch开关变化
       handleSwitch(currentData) {
-        this.axios.post('/user/update', currentData)
+        this.axios.post('http://localhost:2020/evenstar/user/update', currentData)
       },
       //搜索
       searchUser() {
@@ -279,7 +279,7 @@
           if (this.addForm.role === '超级管理员') this.addForm.role = 1
           if (this.addForm.role === '管理员') this.addForm.role = 2
           if (this.addForm.role === '客户') this.addForm.role = 3
-          const {data}=await this.axios.post('/user/add',this.addForm)
+          const {data}=await this.axios.post('http://localhost:2020/evenstar/user/add',this.addForm)
           //后端校验用户名，存在则失败，弹出消息
           if (data.info.code===400) {
             this.$message.error(data.info.msg)
@@ -304,7 +304,7 @@
           validResult = valid
           if (validResult===false) return
           //校验通过发请求
-          const {data}=await this.axios.post('/user/update',this.editForm)
+          const {data}=await this.axios.post('http://localhost:2020/evenstar/user/update',this.editForm)
           //弹出成功消息
           this.$message.success('修改用户成功！')
           //隐藏对话框

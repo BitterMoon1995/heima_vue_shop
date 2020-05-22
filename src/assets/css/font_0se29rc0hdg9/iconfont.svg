@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="zhiding" unicode="&#59247;" d="M545.43 605.741l-32.164 34.284-31.849-34.284-0.055-605.606h64.012zM513.253 639.988L190.606 317.745l45.204-45.124 322.646 322.243zM468.067 594.845l317.035-316.633 45.203 45.125L513.27 639.969zM192.037 704.216h640.124v-63.677H192.037z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>
