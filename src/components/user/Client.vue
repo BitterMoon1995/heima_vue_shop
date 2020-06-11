@@ -21,7 +21,7 @@
           </div>
         </el-col>
         <!--        添加按钮-->
-        <el-col :span="4">
+        <el-col :span="4" style="margin-left: 100px">
           <el-button type="primary" @click="dialogVisible=true">添加用戶</el-button>
         </el-col>
       </el-row>

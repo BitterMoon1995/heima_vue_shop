@@ -15,12 +15,12 @@
             <!--            可清除输入框-->
             <el-input placeholder="请输入内容" v-model="queryParams.condition"
                       clearable @clear="clear" @keyup.enter.native="search">
-              <el-button slot="append" icon="el-icon-search" @click="search" ></el-button>
+              <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
             </el-input>
           </div>
         </el-col>
         <!--        添加按钮-->
-        <el-col :span="4" style="padding: 0">
+        <el-col :span="4" style="padding: 0;margin-left: 100px">
           <el-button type="primary" @click="addDialog=true">新增活动</el-button>
           <!--          <el-button type="success" @click="nigger">check addForm</el-button>-->
         </el-col>
