@@ -31,6 +31,8 @@
         <el-table-column label="景区名" prop="name"></el-table-column>
         <el-table-column label="景区地址" prop="location"></el-table-column>
         <el-table-column label="宣传语" prop="slogan"></el-table-column>
+        <el-table-column label="星级" prop="level"></el-table-column>
+        <el-table-column label="价格" prop="price"></el-table-column>
         <el-table-column label="操作">
           <template v-slot="data">
             <el-tooltip effect="dark" content="编辑景区信息" placement="top" :enterable="false">
@@ -67,6 +69,12 @@
         <el-form-item label="宣传语" prop="slogan">
           <el-input v-model="addForm.slogan"></el-input>
         </el-form-item>
+        <el-form-item label="星级" prop="level">
+          <el-input v-model="addForm.level"></el-input>
+        </el-form-item>
+        <el-form-item label="价格" prop="price">
+          <el-input v-model="addForm.price"></el-input>
+        </el-form-item>
 
         <el-form-item label="名片">
           <postcard v-if="refresh"></postcard>
@@ -98,6 +106,12 @@
         </el-form-item>
         <el-form-item label="宣传语" prop="slogan">
           <el-input v-model="editForm.slogan"></el-input>
+        </el-form-item>
+        <el-form-item label="星级" prop="level">
+          <el-input v-model="editForm.level"></el-input>
+        </el-form-item>
+        <el-form-item label="价格" prop="price">
+          <el-input v-model="editForm.price"></el-input>
         </el-form-item>
 
         <el-form-item label="名片">
@@ -147,6 +161,8 @@
           slogan: '',
           username: this.username,
           location: '',
+          level: '',
+          price: 0,
           // introImgs:this.$store.state.IntroImgs.introImgs, 不行，在vue实例创建后只会初始化一次
           introImgs: [],
           postcard: null,
@@ -163,7 +179,9 @@
           slogan: '',
           username: '',
           location: '',
-          // introImgs:this.$store.state.IntroImgs.introImgs, 不行，在vue实例创建后只会初始化一次
+          level: '',
+          price: 0,
+
           introImgs: [],
           postcard: null,
           slider: null,
@@ -183,6 +201,13 @@
           slogan: [
             {required: true, message: '请输入宣传语', trigger: 'blur'},
             {max: 200, message: '字数请控制在200以内', trigger: 'blur'}
+          ],
+          level: [
+            {required: true, message: '请输入景区星级', trigger: 'blur'},
+            {max: 2, message: '字数请控制在2以内', trigger: 'blur'}
+          ],
+          price: [
+            {required: true, message: '请输入价格', trigger: 'blur'}
           ]
         },
 
@@ -208,6 +233,7 @@
           })
       },
       addScene() {
+
         this.$refs.addSceneRef.validate(async valid=>{
           if (!valid || this.addForm.slider==null || this.addForm.richText==null
           || this.addForm.postcard==null || this.addForm.introImgs==null){
@@ -241,10 +267,10 @@
       },
       editScene(){
         this.$refs.editFormRef.validate(async valid=>{
-          if (!valid){
-            this.$message.error('请检查录入信息！')
-            return
-          }
+          // if (!valid){
+          //   this.$message.error('请检查录入信息！')
+          //   return
+          // }
           const {data}=await axios.post('/add', this.editForm)
           if (data.info.code===400) {
             this.$message.error(data.info.msg)

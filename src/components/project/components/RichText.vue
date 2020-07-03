@@ -75,9 +75,9 @@
           return false
         }
 
-        const isLt2M = file.size / 1024 / 1024 < 8;
+        const isLt2M = file.size / 1024 / 1024 < 12;
         if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 8MB!');
+          this.$message.error('上传图片大小不能超过 12MB!');
           return false
         }
 

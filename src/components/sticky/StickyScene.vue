@@ -122,6 +122,7 @@
           })
       },
       async handleChange(changeItem) {
+        console.log(changeItem)
         let {data}=await axios.post('/scene/change',changeItem)
         if (data.info.code===400){
           this.$message.error(data.info.msg)
