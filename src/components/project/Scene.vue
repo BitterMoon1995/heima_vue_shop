@@ -148,6 +148,9 @@
     components: {IntroImgs, Postcard, Slider, RichText},
     created() {
       axios.defaults.baseURL="http://localhost:2020/mini/scene"
+      let username = window.sessionStorage.getItem('username')
+      this.addForm.username = username
+      this.editForm.username = username
       this.getSceneList()
     },
     data() {

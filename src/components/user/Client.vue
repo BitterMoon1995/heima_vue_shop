@@ -4,8 +4,8 @@
     <!--  面包屑导航区-->
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>置顶管理</el-breadcrumb-item>
-      <el-breadcrumb-item>首页楼层图</el-breadcrumb-item>
+      <el-breadcrumb-item>客户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>客户信息管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!--    卡片-->
     <el-card class="box-card">
@@ -217,19 +217,19 @@
         await this.axios.get('http://localhost:2020/evenstar/user/getClients', {
           params: this.queryParams
         })
-          .then(result => {
-            let {userList, total} = result.data
+        .then(result => {
+          let {userList, total} = result.data
 
-            userList.forEach(function (item) {
-              if (item.role === 1) item.role = '超级管理员'
-              if (item.role === 2) item.role = '管理员'
-              if (item.role === 3) item.role = '客户'
-            })
-
-            this.userList = userList
-            this.total = total
-
+          userList.forEach(function (item) {
+            if (item.role === 1) item.role = '超级管理员'
+            if (item.role === 2) item.role = '管理员'
+            if (item.role === 3) item.role = '客户'
           })
+
+          this.userList = userList
+          this.total = total
+
+        })
       },
       //打开页面、增删改后，都要通过神之操作重置表的顺序，永远滴神！！！
       resetOrder(){

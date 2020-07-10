@@ -5,6 +5,7 @@ import Home from "../components/Home"
 import Welcome from "../components/Welcome"
 import Authorization from "../components/user/Authorization"
 import Client from "../components/user/Client";
+import Withdraw from "../components/user/Withdraw";
 import Scene from "../components/project/Scene";
 import Route from "../components/project/Route";
 import Activity from "../components/project/Activity";
@@ -32,6 +33,10 @@ const routes = [
       {
         path: '/client',
         component: Client
+      },
+      {
+        path: '/withdraw',
+        component: Withdraw
       },
       {
         path: '/scene',

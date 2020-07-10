@@ -50,8 +50,10 @@
 <script>
   export default {
     created() {
+      this.username = window.sessionStorage.getItem("username")
+
       //页面创建，获取所有菜单
-      this.getMenus(),
+      this.getMenus()
       //使页面刷新后二级菜单的激活状态不丢失
       this.activeIndex=window.sessionStorage.getItem('activeIndex')
     },
@@ -68,7 +70,8 @@
         //控制导航栏折叠
         isCollapse:false,
         //被选中的二级菜单
-        activeIndex:''
+        activeIndex:'',
+        username:''
       }
     },
     methods: {
@@ -77,7 +80,9 @@
         this.$router.push('/login')
       },
       async getMenus(){
-        const {data}=await this.axios.get('http://localhost:2020/evenstar/menu/getAll')
+        const {data}=await this.axios.get('http://localhost:2020/evenstar/menu/getAll',{
+          params:{username:this.username}
+        })
         this.menus=data
       },
       toggleMenu(){

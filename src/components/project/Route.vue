@@ -134,6 +134,9 @@
   export default {
     components: {IntroImgs, Postcard, Slider, RichText},
     created() {
+      let username = window.sessionStorage.getItem('username')
+      this.addForm.username = username
+      this.editForm.username = username
       axios.defaults.baseURL="http://localhost:2020/mini/route"
       this.getRouteList()
     },

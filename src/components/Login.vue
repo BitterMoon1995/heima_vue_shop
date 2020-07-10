@@ -54,6 +54,7 @@
         this.$refs.formRef.resetFields()
       },
       login() {
+        let username = this.form.username
         let validResult
         //前台校验，规则沿用rules。第一个参数为校验结果，第二个为出错的字段
         this.$refs.formRef.validate((valid,obj)=>{
@@ -76,9 +77,12 @@
             // 获取并存贮token到sessionStorage中（存活于当前会话）
             let token=data.data
             window.sessionStorage.setItem('token',token)
-            window.sessionStorage.setItem('username',this.form.username)
-            //编程式路由
-            this.$router.push('/home')
+            window.sessionStorage.setItem('username',username)
+            //编程式路由，query传参
+            this.$router.push({
+              path:'/home',
+              query:{username:username}
+            })
           }
         })
       }
