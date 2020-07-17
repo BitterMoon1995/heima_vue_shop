@@ -126,8 +126,8 @@
         let {data}=await axios.post('/scene/change',changeItem)
         if (data.info.code===400){
           this.$message.error(data.info.msg)
-          changeItem.stickyTop=false
-          await axios.post('/scene/change',changeItem)
+          // changeItem.stickyTop=false//一 个 极 小 的 细 节 ，这里不就只能回退名片图的误置顶了吗？
+          // await axios.post('/scene/change',changeItem)//又发一道干嘛？
         }
       },
 

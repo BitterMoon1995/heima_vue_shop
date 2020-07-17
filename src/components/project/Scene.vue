@@ -41,6 +41,9 @@
             <el-tooltip effect="dark" content="删除本景区" placement="top" :enterable="false">
               <el-button type="danger" icon="el-icon-delete" circle @click="del(data.row.id)"></el-button>
             </el-tooltip>
+            <el-tooltip effect="dark" content="查看景区ID" placement="top" :enterable="false">
+              <el-button type="info" icon="el-icon-info" circle @click="showID(data.row.id)"></el-button>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -65,6 +68,12 @@
         </el-form-item>
         <el-form-item label="景区地址" prop="location">
           <el-input v-model="addForm.location"></el-input>
+        </el-form-item>
+        <el-form-item label="经度" prop="longitude">
+          <el-input v-model="addForm.longitude"></el-input>
+        </el-form-item>
+        <el-form-item label="纬度" prop="latitude">
+          <el-input v-model="addForm.latitude"></el-input>
         </el-form-item>
         <el-form-item label="宣传语" prop="slogan">
           <el-input v-model="addForm.slogan"></el-input>
@@ -103,6 +112,12 @@
         </el-form-item>
         <el-form-item label="景区地址" prop="location">
           <el-input v-model="editForm.location"></el-input>
+        </el-form-item>
+        <el-form-item label="经度" prop="longitude">
+          <el-input v-model="editForm.longitude"></el-input>
+        </el-form-item>
+        <el-form-item label="纬度" prop="latitude">
+          <el-input v-model="editForm.latitude"></el-input>
         </el-form-item>
         <el-form-item label="宣传语" prop="slogan">
           <el-input v-model="editForm.slogan"></el-input>
@@ -164,6 +179,8 @@
           slogan: '',
           username: this.username,
           location: '',
+          longitude: 0,
+          latitude: 0,
           level: '',
           price: 0,
           // introImgs:this.$store.state.IntroImgs.introImgs, 不行，在vue实例创建后只会初始化一次
@@ -182,6 +199,8 @@
           slogan: '',
           username: '',
           location: '',
+          longitude: 0,
+          latitude: 0,
           level: '',
           price: 0,
 
@@ -200,6 +219,12 @@
           location: [
             {required: true, message: '请输入景区地址', trigger: 'blur'},
             {max: 40, message: '字数请控制在40以内', trigger: 'blur'}
+          ],
+          longitude: [
+            {required: true, message: '务必输入正确经度', trigger: 'blur'},
+          ],
+          latitude: [
+            {required: true, message: '务必输入正确纬度', trigger: 'blur'},
           ],
           slogan: [
             {required: true, message: '请输入宣传语', trigger: 'blur'},
@@ -239,7 +264,8 @@
 
         this.$refs.addSceneRef.validate(async valid=>{
           if (!valid || this.addForm.slider==null || this.addForm.richText==null
-          || this.addForm.postcard==null || this.addForm.introImgs==null){
+          || this.addForm.postcard==null || this.addForm.introImgs==null
+          || this.addForm.latitude===0 || this.addForm.longitude===0){
             this.$message.error('请检查录入信息！')
             return
           }
@@ -270,10 +296,10 @@
       },
       editScene(){
         this.$refs.editFormRef.validate(async valid=>{
-          // if (!valid){
-          //   this.$message.error('请检查录入信息！')
-          //   return
-          // }
+          if (!valid || this.addForm.latitude===0 || this.addForm.longitude===0){
+            this.$message.error('请检查录入信息！')
+            return
+          }
           const {data}=await axios.post('/add', this.editForm)
           if (data.info.code===400) {
             this.$message.error(data.info.msg)
@@ -338,6 +364,22 @@
       clear() {
         this.queryParams.condition = ''
         this.getSceneList()
+      },
+      //查看景区ID
+      showID(id) {
+        //MessageBox 弹框
+        this.$alert(id, '本景区ID', {
+          confirmButtonText: '确定',
+          showConfirmButton: false,//是否显示确定按钮
+          closeOnClickModal: true,//是否可通过点击遮罩关闭 MessageBox
+          closeOnPressEscape: true,//是否可通过按下 ESC 键关闭 MessageBox
+          // callback: action => {
+          //   this.$message({
+          //     type: 'success',
+          //     // message: `已复制到剪切板o(*￣︶￣*)o: ${ action }`
+          //   });
+          // }
+        });
       }
     },
     //★★★用组件的watch属性将data中的数据和vuex中的数据同步

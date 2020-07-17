@@ -13,6 +13,7 @@ import StickyScene from "../components/sticky/StickyScene";
 import StickyRoute from "../components/sticky/StickyRoute";
 import StickyActivity from "../components/sticky/StickyActivity";
 import Homepage from "../components/pageManage/Homepage";
+import TopSearch from "../components/sticky/TopSearch";
 
 Vue.use(VueRouter)
 
@@ -65,6 +66,10 @@ const routes = [
       {
         path: '/homepage',
         component: Homepage
+      },
+      {
+        path: '/topSearch',
+        component: TopSearch
       }
     ]
   }
