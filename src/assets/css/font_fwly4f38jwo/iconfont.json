@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8314476",
+      "name": "数据库 大数据",
+      "font_class": "wulianwang-",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "10791815",
+      "name": "大数据",
+      "font_class": "dashuju",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    }
+  ]
+}

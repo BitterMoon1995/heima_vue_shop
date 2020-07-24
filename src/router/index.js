@@ -14,6 +14,7 @@ import StickyRoute from "../components/sticky/StickyRoute";
 import StickyActivity from "../components/sticky/StickyActivity";
 import Homepage from "../components/pageManage/Homepage";
 import TopSearch from "../components/sticky/TopSearch";
+import VipStatistics from "../components/bigdata/VipStatistics"
 
 Vue.use(VueRouter)
 
@@ -70,6 +71,10 @@ const routes = [
       {
         path: '/topSearch',
         component: TopSearch
+      },
+      {
+        path: '/vipStatistics',
+        component: VipStatistics
       }
     ]
   }

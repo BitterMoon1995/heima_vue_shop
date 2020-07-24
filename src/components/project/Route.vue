@@ -72,7 +72,7 @@
         <el-form-item label="名片">
           <postcard v-if="refresh"></postcard>
         </el-form-item>
-        <el-form-item label="首页展示图">
+        <el-form-item label="首页轮播图">
           <slider v-if="refresh"></slider>
         </el-form-item>
         <el-form-item label="详情页轮播图">
@@ -104,7 +104,7 @@
         <el-form-item label="名片">
           <postcard v-if="refresh"></postcard>
         </el-form-item>
-        <el-form-item label="首页展示图">
+        <el-form-item label="首页轮播图">
           <slider v-if="refresh"></slider>
         </el-form-item>
         <el-form-item label="详情页轮播图">

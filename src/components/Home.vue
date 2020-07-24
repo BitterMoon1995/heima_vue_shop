@@ -25,13 +25,13 @@
 <!--          一级菜单-->
           <el-submenu v-for="item in menus" :key="item.id" :index="item.id.toString()">
             <template slot="title">
-              <i :class="iconsObj[item.id]" style="font-size: 20px"></i>
+              <i :class="iconsObj[item.id]" class="menuIcon" style="font-size: 20px"></i>
               <span>{{item.name}}</span>
             </template>
 <!--            二级菜单-->
             <el-menu-item v-for="subItem in item.children" :index="subItem.path"
                           :key="subItem.id" @click="saveActiveState(subItem.path)">
-              <template>
+              <template class="menu-icon">
                 <i class="el-icon-minus"></i>
                 <span>{{subItem.name}}</span>
               </template>
@@ -65,7 +65,8 @@
           '2':'iconfont icon-yonghuguanli',
           '3':'iconfont icon-hezuo',
           '4':'iconfont icon-zhiding',
-          '5':'iconfont icon-shouji\n'
+          '5':'iconfont icon-shouji',
+          '6':'iconfont icon-wulianwang-'
         },
         //控制导航栏折叠
         isCollapse:false,
@@ -145,9 +146,5 @@
     background-color: #4a5064;
     color: white;
     text-align: center;
-  }
-
-  .iconfont{
-    font-size: larger;
   }
 </style>

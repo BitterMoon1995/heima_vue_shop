@@ -33,7 +33,21 @@
         <el-table-column label="宣传语" prop="slogan"></el-table-column>
         <el-table-column label="星级" prop="level"></el-table-column>
         <el-table-column label="价格" prop="price"></el-table-column>
+        <!--    插槽指的是写在父组件中，传递并填补子组件slot标签的内容
+        作用域插槽就是在单个插槽和具名插槽的基础上，绑定子组件数据的插槽
+        所以渲染结果就是父组件提供样式，子组件提供数据
+        作用域插槽绑定子组件数据的具体方式是：
+          子组件：在slot标签中自定义属性，属性名作为数据的索引，方便父组件检索；属性的值就是要传递的数据。
+
+          父组件：带值的 v-slot 来定义我们提供的插槽 prop 的名字，这个名字可以是任意的，
+          定义后名字是一个包含所有插槽 prop 的对象
+          例如v-slot="data"，就可以通过data.【子组件中属性名】的形式获取子组件slot中所有自定义属性的数据-->
         <el-table-column label="操作">
+          <!--HTML内容模板：<template>元素，是一种用于保存客户端内容机制，该内容在加载页面时不会呈现，
+          但随后可以(原文为 may be)在运行时使用JavaScript实例化。
+          将模板视为一个可存储在文档中以便后续使用的内容片段。
+          虽然解析器在加载页面时确实会处理<template>元素的内容，但这样做只是为了确保这些内容有效；但元素内容不会被渲染。
+          -->
           <template v-slot="data">
             <el-tooltip effect="dark" content="编辑景区信息" placement="top" :enterable="false">
               <el-button type="primary" icon="el-icon-edit" circle @click="showEditDialog(data.row)"></el-button>
@@ -88,7 +102,7 @@
         <el-form-item label="名片">
           <postcard v-if="refresh"></postcard>
         </el-form-item>
-        <el-form-item label="首页展示图">
+        <el-form-item label="首页轮播图">
           <slider v-if="refresh"></slider>
         </el-form-item>
         <el-form-item label="详情页轮播图">
@@ -132,7 +146,7 @@
         <el-form-item label="名片">
           <postcard v-if="refresh"></postcard>
         </el-form-item>
-        <el-form-item label="首页展示图">
+        <el-form-item label="首页轮播图">
           <slider v-if="refresh"></slider>
         </el-form-item>
         <el-form-item label="详情页轮播图">
