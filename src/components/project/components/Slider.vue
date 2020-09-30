@@ -26,6 +26,7 @@
 <script>
   import {mapGetters, mapState, mapActions, mapMutations} from "vuex"
   import imgSize from "../../../utils/imgSize";
+  import axios from "axios";
 
   export default {
     data() {
@@ -58,6 +59,13 @@
         this.transmit(this.slider)
       },
       handleRemove(file, fileList) {
+        let strings = file.response.split('//');
+        let url = strings[2].substring(10);
+
+        axios.delete('http://localhost:2020/delFile',{
+          params:{url:url}
+        })
+
         this.slider.src = ''
         this.slider.name = ''
         //引用对象的改变，是指向对象改变，指向不变，只改那个对象的属性值，是监听不到的

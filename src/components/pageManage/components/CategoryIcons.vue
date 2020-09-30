@@ -31,13 +31,6 @@
   export default {
     data() {
       return {
-        calendar:{
-          date:'四月廿八',
-          year:'庚子',
-          solarTerm:'小满'
-        },
-
-
         fileList: [],
 
         introImgs: [],

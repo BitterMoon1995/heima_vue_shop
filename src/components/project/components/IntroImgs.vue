@@ -25,6 +25,7 @@
 </template>
 
 <script>
+  import axios from "axios"
   import {mapGetters, mapState,mapActions,mapMutations} from "vuex"
   import imgSize from "../../../utils/imgSize";
 
@@ -67,6 +68,16 @@
       }),
 
       handleRemove(file, fileList) {
+        //回调的服务器文件路径为file.response
+        //处理字符串
+        let strings = file.response.split('//');
+        let url = strings[2].substring(10);
+
+        //发请求，服务器的删了
+        axios.delete('http://localhost:2020/delFile',{
+          params:{url:url}
+        })
+
         this.transmit(null)
         this.introImgs = []
         fileList.forEach(file => {
