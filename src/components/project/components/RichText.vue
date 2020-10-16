@@ -8,11 +8,12 @@
       :on-remove="handleRemove"
       :on-change="handleChange"
       :on-success="handleSuccess"
+      :on-progress="handleProgress"
+      :on-error="handleError"
       :limit="1"
       :file-list="fileList"
       :drag="true"
-      :before-upload="beforeUpload"
-      multiple>
+      :before-upload="beforeUpload">
       <i class="el-icon-upload"></i>
       <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过8MB</div>
     </el-upload>
@@ -61,6 +62,9 @@
         this.transmit(this.richText)
       },
       handleRemove(file, fileList) {
+        if (file==null)
+          return
+
         let strings = file.response.split('//');
         let url = strings[2].substring(10);
 
@@ -83,9 +87,9 @@
           return false
         }
 
-        const isLt2M = file.size / 1024 / 1024 < 12;
+        const isLt2M = file.size / 1024 / 1024 < 16;
         if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 12MB!');
+          this.$message.error('上传图片大小不能超过 16MB!');
           return false
         }
 
@@ -101,6 +105,18 @@
         }
         //必须返一个true，不懂，也不敢问
         return true
+      },
+      handleProgress(err, file, fileList){
+        this.loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+      },
+      handleError(err, file, fileList){
+        this.loading.close()
+        this.$message.error('图片'+file.name+'上传失败！')
       }
     }
   }

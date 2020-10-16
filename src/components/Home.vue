@@ -77,6 +77,10 @@
     },
     methods: {
       logout() {
+        let username = window.sessionStorage.getItem('username');
+        this.axios.delete("http://localhost:2020/evenstar/user/logout",{
+          params:{username:username}
+        })
         window.sessionStorage.clear()
         this.$router.push('/login')
       },

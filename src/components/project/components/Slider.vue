@@ -8,11 +8,12 @@
       :on-remove="handleRemove"
       :on-change="handleChange"
       :on-success="handleSuccess"
+      :on-progress="handleProgress"
+      :on-error="handleError"
       :limit="1"
       :file-list="fileList"
       :drag="true"
-      :before-upload="beforeUpload"
-      multiple>
+      :before-upload="beforeUpload">
       <i class="el-icon-upload"></i>
       <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过512KB</div>
     </el-upload>
@@ -59,6 +60,9 @@
         this.transmit(this.slider)
       },
       handleRemove(file, fileList) {
+        if (file==null)
+          return
+
         let strings = file.response.split('//');
         let url = strings[2].substring(10);
 
@@ -98,6 +102,18 @@
         }
         //必须返一个true，不懂，也不敢问
         return true
+      },
+      handleProgress(err, file, fileList){
+        this.loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+      },
+      handleError(err, file, fileList){
+        this.loading.close()
+        this.$message.error('图片'+file.name+'上传失败！')
       }
     }
   }

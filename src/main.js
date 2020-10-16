@@ -29,7 +29,8 @@ Vue.prototype.axios = axios
 import vueCookies from 'vue-cookies'
 Vue.use(vueCookies)
 
-//配置请求拦截器，将token添加到请求头的字段
+axios.defaults.baseURL = 'http://localhost:2020/'
+//★配置请求拦截器，将token添加到请求头的字段
 axios.interceptors.request.use(config => {
   config.headers.Authorization = window.sessionStorage.getItem('token')
   config.headers.Account = window.sessionStorage.getItem('username')

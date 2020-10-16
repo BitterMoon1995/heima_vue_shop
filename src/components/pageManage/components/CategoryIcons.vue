@@ -14,7 +14,7 @@
       :before-upload="beforeUpload"
       multiple>
       <i class="el-icon-upload"></i>
-      <div class="el-upload__tip" slot="tip" style="padding-left: 0!important;">只能上传jpg/png文件，且不超过512KB</div>
+      <div class="el-upload__tip" slot="tip" style="padding-left: 0!important;"></div>
     </el-upload>
 
     <!--        预览弹出框-->
@@ -76,7 +76,7 @@
         const isJPEG = file.type === 'image/jpeg'
         const isPNG = file.type === 'image/png'
 
-        const isLt2M = file.size / 1024 / 1024 < 0.5;
+        const isLt2M = file.size / 1024 / 1024 < 5;
 
         if (!isJPG && !isPNG && !isJPEG) {
           this.$message.error('上传图片只能是 JPG 或 PNG 格式!');
@@ -84,7 +84,7 @@
         }
 
         if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 512KB!');
+          this.$message.error('上传图片大小不能超过 5MB!');
           return false
         }
 

@@ -172,6 +172,8 @@
   import Postcard from "./components/Postcard"
   import Slider from "./components/Slider"
   import RichText from "./components/RichText";
+  import imgSize from "../../utils/imgSize";
+  import {transform} from "../../utils/imgSrc";
 
   export default {
     components: {IntroImgs, Postcard, Slider, RichText},
@@ -275,6 +277,8 @@
           })
       },
       addScene() {
+        this.addForm = transform(this.addForm)
+        console.log(this.addForm)
 
         this.$refs.addSceneRef.validate(async valid=>{
           if (!valid || this.addForm.slider==null || this.addForm.richText==null
@@ -285,6 +289,7 @@
           }
           this.addForm.username = window.sessionStorage.getItem('username')
           const {data}=await axios.post('/add', this.addForm)
+          console.log(data)
           if (data.info.code===400) {
             this.$message.error(data.info.msg)
             return

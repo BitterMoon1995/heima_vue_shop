@@ -71,7 +71,6 @@
           if (code===400) return this.$message.success(msg)
           if (code===200) {
             let {data}=result
-            console.log(data.data)
             //弹窗
             this.$message.success(msg)
             // 获取并存贮token到sessionStorage中（存活于当前会话）

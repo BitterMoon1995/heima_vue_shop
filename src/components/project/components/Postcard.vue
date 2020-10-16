@@ -8,11 +8,12 @@
       :on-remove="handleRemove"
       :on-change="handleChange"
       :on-success="handleSuccess"
+      :on-progress="handleProgress"
+      :on-error="handleError"
       :limit="1"
       :file-list="fileList"
       :drag="true"
-      :before-upload="beforeUpload"
-      multiple>
+      :before-upload="beforeUpload">
       <i class="el-icon-upload"></i>
       <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过512KB</div>
     </el-upload>
@@ -45,6 +46,9 @@
 
         dialogImageUrl: '',
         dialogVisible: false,
+
+        //加载遮罩层（锁屏）
+        loading: null
       }
     },
     methods: {
@@ -62,9 +66,16 @@
         this.postcard.name = file.name
         this.postcard.src = file.response
         this.transmit(this.postcard)
+        this.loading.close()
       },
-
+      /*
+      file有三种状态(status)：ready(待传输，预览的是url)，success(传输成功)，uploading(正在传输)
+      file的属性：url，表示的是本地的blob对象，不论是否成功都有；src，才是服务器端路径，传输成功才有
+       */
       handleRemove(file, fileList) {
+        console.log(file)
+        if (file.status=='ready')
+          return
         let strings = file.response.split('//');
         let url = strings[2].substring(10);
 
@@ -103,6 +114,32 @@
         }
         //必须返一个true，不懂，也不敢问
         return true
+      },
+
+      handleProgress(err, file, fileList){
+        this.loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        setTimeout(() => {
+          /*上传失败处理
+          处理逻辑：上传中的图片status属性为【uploading】，这里设置1.5秒的定时器，
+          如果到点了status还是内个（反正不是success就是了），我们就认为上传失败了，并进行后续处理*/
+          if (file.status!='success') {
+            //婷芷loading锁屏
+            this.loading.close();
+            //清空预览数组(只有一张图)
+            this.fileList.pop()
+            //弹错误信息
+            this.$message.error('图片' + file.name + '上传失败！')
+          }
+        }, 1500);
+      },
+      handleError(err, file, fileList){
+        this.loading.close()
+
       }
     }
   }
