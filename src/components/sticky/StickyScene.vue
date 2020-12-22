@@ -61,9 +61,9 @@
               </el-input>
             </template>
           </el-table-column>
-          <el-table-column label="页面路径(开发人员设置)">
+          <el-table-column label="页面路径(开发人员设置)" width="400">
             <template v-slot="data">
-              <el-input style="width: 140px" v-model="data.row.url" maxlength="40"
+              <el-input style="width: 290px" v-model="data.row.url" maxlength="80"
                         @blur="handleChange(data.row)" class="rookie">
               </el-input>
             </template>
@@ -91,11 +91,10 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import {iAxios as axios} from "../../config/iAxios";
 
   export default {
     created() {
-      axios.defaults.baseURL = "http://localhost:2020/mini"
       this.getSceneList()
     },
     data() {
@@ -111,23 +110,19 @@
     },
     methods: {
       async getSceneList() {
-        await axios.get('/scene/getSticky', {
+        await axios.get('mini/scene/getSticky', {
           params: this.queryParams
         })
           .then(res => {
             let {stickyList, total} = res.data
-            console.log(res)
             this.sceneList = stickyList
             this.sceneTotal = total
           })
       },
       async handleChange(changeItem) {
-        console.log(changeItem)
-        let {data}=await axios.post('/scene/change',changeItem)
-        if (data.info.code===400){
-          this.$message.error(data.info.msg)
-          // changeItem.stickyTop=false//一 个 极 小 的 细 节 ，这里不就只能回退名片图的误置顶了吗？
-          // await axios.post('/scene/change',changeItem)//又发一道干嘛？
+        let {data}=await axios.post('mini/scene/change',changeItem)
+        if (data.status.code===400){
+          this.$message.error(data.status.msg)
         }
       },
 

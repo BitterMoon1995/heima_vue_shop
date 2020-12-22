@@ -23,16 +23,15 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import {iAxios as axios} from "../config/iAxios";
   export default {
     created() {
-      axios.defaults.baseURL="http://localhost:2020/evenstar"
     },
     data() {
       return {
         form: {
-          username: 'admin',
-          password: '123456'
+          username: '',
+          password: ''
         },
         loginRules: {
           username: [
@@ -64,7 +63,7 @@
           this.$message.error('请检查输入信息！')
           return
         }
-        axios.post('/user/login',this.form)
+        axios.post('/evenstar/user/login',this.form)
         .then(result=>{
           let {msg,code}=result.data.info
           if (code===404) return this.$message.success(msg)

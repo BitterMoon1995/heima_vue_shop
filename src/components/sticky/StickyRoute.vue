@@ -91,11 +91,10 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import {iAxios as axios} from "@/config/iAxios";
 
   export default {
     created() {
-      axios.defaults.baseURL = "http://localhost:2020/mini"
       this.getRouteList()
     },
     data() {

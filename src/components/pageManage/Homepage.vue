@@ -77,11 +77,12 @@
 
 <script>
   import Postcard from "../project/components/Postcard";
-  import axios from "axios"
+  import {iAxios as axios} from "../../config/iAxios"
+  import {transformSrc} from "../../utils/imgSrc"
 
   export default {
     created() {
-      axios.defaults.baseURL='http://localhost:2020/admin/mini-img'
+      // axios.defaults.baseURL='https://www.freetour.top:721/admin/mini-img'
       this.getImgList()
     },
     components:{Postcard},
@@ -113,7 +114,7 @@
     },
     methods: {
       async getImgList() {
-        await axios.get('/queryAll',{
+        await axios.get('/admin/mini-img/queryAll',{
           params : this.queryParams
         })
         .then(res => {
@@ -125,11 +126,11 @@
       addImg(){
         let src1 = this.image.src
         //把域名换成远程云服务器
-        let temp = src1.split("//");
-        this.addForm.src = temp[0] + '//localhost//' + temp[2]
+        this.addForm.src = transformSrc(src1)
+        console.log(this.addForm.src)
         this.addForm.name = this.image.name
         //请求
-        axios.post('/upload',this.addForm)
+        axios.post('/admin/mini-img/upload',this.addForm)
         .then(res=>{
           if (res.data.status.code===400) {
             this.$message.error('信息残缺')
@@ -152,7 +153,7 @@
         })
       },
       async editImg() {
-        const {data} = await axios.post('/upload', this.editForm)
+        const {data} = await axios.post('/admin/mini-img/upload', this.editForm)
         if (data.status.code===400) {
           this.$message.error('信息残缺')
         }
@@ -191,7 +192,7 @@
         }
         else
         {
-          axios.delete('/del', {
+          axios.delete('/admin/mini-img/del', {
             params: {id: data}
           }).then(res => {
             if (res.data.status.code === 200) {

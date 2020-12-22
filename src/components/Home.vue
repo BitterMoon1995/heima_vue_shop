@@ -48,6 +48,7 @@
 </template>
 
 <script>
+  import {iAxios as axios} from "../config/iAxios";
   export default {
     created() {
       this.username = window.sessionStorage.getItem("username")
@@ -78,14 +79,14 @@
     methods: {
       logout() {
         let username = window.sessionStorage.getItem('username');
-        this.axios.delete("http://localhost:2020/evenstar/user/logout",{
+        axios.delete("evenstar/user/logout",{
           params:{username:username}
         })
         window.sessionStorage.clear()
         this.$router.push('/login')
       },
       async getMenus(){
-        const {data}=await this.axios.get('http://localhost:2020/evenstar/menu/getAll',{
+        const {data}=await axios.get('evenstar/menu/getAll',{
           params:{username:this.username}
         })
         this.menus=data

@@ -167,7 +167,7 @@
 </template>
 
 <script>
-  import axios from "axios"
+  import {iAxios as axios} from "../../config/iAxios"
   import IntroImgs from "./components/IntroImgs"
   import Postcard from "./components/Postcard"
   import Slider from "./components/Slider"
@@ -178,7 +178,6 @@
   export default {
     components: {IntroImgs, Postcard, Slider, RichText},
     created() {
-      axios.defaults.baseURL="http://localhost:2020/mini/scene"
       let username = window.sessionStorage.getItem('username')
       this.addForm.username = username
       this.editForm.username = username
@@ -268,7 +267,7 @@
     methods: {
       async getSceneList() {
         this.queryParams.username = window.sessionStorage.getItem('username')
-        await axios.get('/getByUsername', {
+        await axios.get('mini/scene/getByUsername', {
           params: this.queryParams
         })
           .then(res => {
@@ -288,7 +287,7 @@
             return
           }
           this.addForm.username = window.sessionStorage.getItem('username')
-          const {data}=await axios.post('/add', this.addForm)
+          const {data}=await axios.post('mini/scene/add', this.addForm)
           console.log(data)
           if (data.info.code===400) {
             this.$message.error(data.info.msg)
@@ -314,12 +313,15 @@
         this.editForm=data
       },
       editScene(){
+        this.editForm = transform(this.editForm)
+        console.log(this.editForm)
+
         this.$refs.editFormRef.validate(async valid=>{
-          if (!valid || this.addForm.latitude===0 || this.addForm.longitude===0){
+          if (!valid || this.editForm.latitude===0 || this.editForm.longitude===0){
             this.$message.error('请检查录入信息！')
             return
           }
-          const {data}=await axios.post('/add', this.editForm)
+          const {data}=await axios.post('mini/scene/add', this.editForm)
           if (data.info.code===400) {
             this.$message.error(data.info.msg)
             return
@@ -351,7 +353,7 @@
         }
         else
         {
-          axios.delete('/del', {
+          axios.delete('mini/scene/del', {
             params: {id: data}
           }).then(res => {
             if (res) {

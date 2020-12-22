@@ -22,20 +22,13 @@ Vue.prototype.$confirm = ElementUI.MessageBox.confirm//确认提示框，例如�
 import './assets/css/global.css'
 
 //导入axios
-import axios from 'axios'
+import {iAxios as axios} from "./config/iAxios";
 Vue.prototype.axios = axios
 
 //导入cookies
 import vueCookies from 'vue-cookies'
 Vue.use(vueCookies)
 
-axios.defaults.baseURL = 'http://localhost:2020/'
-//★配置请求拦截器，将token添加到请求头的字段
-axios.interceptors.request.use(config => {
-  config.headers.Authorization = window.sessionStorage.getItem('token')
-  config.headers.Account = window.sessionStorage.getItem('username')
-  return config
-})
 //引入百度的图表组件库echarts
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts

@@ -4,7 +4,7 @@ function transformSrc(src) {
 
   //把域名换成远程云服务器
   let temp = src.split("//");
-  return temp[0] + '//localhost//' + temp[2]
+  return 'https://www.freetour.top//' + temp[2]
 }
 
 function transform(addForm) {
@@ -20,7 +20,7 @@ function transform(addForm) {
     addForm.slider.src = transformSrc(addForm.slider.src)
   }
 
-  if (addForm.introImgs.length>0) {
+  if (addForm.introImgs!=null) {
     for (let i = 0; i < addForm.introImgs.length; i++) {
       addForm.introImgs[i].src = transformSrc(addForm.introImgs[i].src)
     }
@@ -28,4 +28,4 @@ function transform(addForm) {
   return addForm
 }
 
-export {transform}
+export {transform,transformSrc}

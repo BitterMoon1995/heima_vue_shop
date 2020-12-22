@@ -1,20 +1,21 @@
 <template>
   <div>
     <el-upload
-      action="http://localhost:2020/upload"
+      action="https://www.freetour.top:721/upload"
       list-type="picture-card"
       accept="image/jpeg,image/png"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :on-change="handleChange"
       :on-success="handleSuccess"
+      :on-error="handleError"
       :limit="6"
       :file-list="fileList"
       :drag="true"
       :before-upload="beforeUpload"
       multiple>
       <i class="el-icon-upload"></i>
-      <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过512KB</div>
+      <div class="el-upload__tip" slot="tip">请逐张上传</div>
     </el-upload>
 
     <!--        预览弹出框-->
@@ -25,9 +26,9 @@
 </template>
 
 <script>
-  import axios from "axios"
   import {mapGetters, mapState,mapActions,mapMutations} from "vuex"
   import imgSize from "../../../utils/imgSize";
+  import {iAxios as axios} from "../../../config/iAxios";
 
   export default {
     data() {
@@ -74,7 +75,7 @@
         let url = strings[2].substring(10);
 
         //发请求，服务器的删了
-        axios.delete('http://localhost:2020/delFile',{
+        axios.delete('delFile',{
           params:{url:url}
         })
 
@@ -89,6 +90,11 @@
           })
         })
         this.transmit(this.introImgs)
+      },
+
+      handleError(err, file, fileList){
+        this.loading.close()
+        this.$message.error('图片'+file.name+'上传失败！')
       },
 
       beforeUpload(file, fileList){

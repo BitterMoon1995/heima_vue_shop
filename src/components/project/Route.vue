@@ -125,7 +125,7 @@
 </template>
 
 <script>
-  import axios from "axios"
+  import {iAxios as axios} from "axios"
   import IntroImgs from "./components/IntroImgs"
   import Postcard from "./components/Postcard"
   import Slider from "./components/Slider"
@@ -137,7 +137,7 @@
       let username = window.sessionStorage.getItem('username')
       this.addForm.username = username
       this.editForm.username = username
-      axios.defaults.baseURL="http://localhost:2020/mini/route"
+      axios.defaults.baseURL="https://www.freetour.top:721/mini/route"
       this.getRouteList()
     },
     data() {

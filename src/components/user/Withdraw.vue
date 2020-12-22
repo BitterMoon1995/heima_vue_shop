@@ -55,6 +55,7 @@
 </template>
 
 <script>
+  import {iAxios as axios} from "../../config/iAxios";
   export default {
     created() {
       this.getList()
@@ -74,7 +75,7 @@
     },
     methods: {
       async getList() {
-        await this.axios.post('http://localhost:2020/admin/withdraw/getList',this.queryParams)
+        await axios.post('admin/withdraw/getList',this.queryParams)
         .then(res=>{
           let {list,total} = res.data
           this.withdrawList = list
@@ -98,8 +99,8 @@
 
       //改变状态
       change(data){
-        this.axios.post(
-          "http://localhost:2020/admin/withdraw/change",data
+        axios.post(
+          "admin/withdraw/change",data
         )
       },
       handle(data){

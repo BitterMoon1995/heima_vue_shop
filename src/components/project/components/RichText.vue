@@ -1,14 +1,13 @@
 <template>
   <div>
     <el-upload
-      action="http://localhost:2020/upload"
+      action="https://www.freetour.top:721/upload"
       list-type="picture-card"
       accept="image/jpeg,image/png"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :on-change="handleChange"
       :on-success="handleSuccess"
-      :on-progress="handleProgress"
       :on-error="handleError"
       :limit="1"
       :file-list="fileList"
@@ -27,7 +26,7 @@
 <script>
   import {mapGetters, mapState, mapActions, mapMutations} from "vuex"
   import imgSize from "../../../utils/imgSize";
-  import axios from "axios";
+  import {iAxios as axios} from "../../../config/iAxios";
 
   export default {
     data() {
@@ -68,7 +67,7 @@
         let strings = file.response.split('//');
         let url = strings[2].substring(10);
 
-        axios.delete('http://localhost:2020/delFile',{
+        axios.delete('delFile',{
           params:{url:url}
         })
 
@@ -105,14 +104,6 @@
         }
         //必须返一个true，不懂，也不敢问
         return true
-      },
-      handleProgress(err, file, fileList){
-        this.loading = this.$loading({
-          lock: true,
-          text: 'Loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        })
       },
       handleError(err, file, fileList){
         this.loading.close()

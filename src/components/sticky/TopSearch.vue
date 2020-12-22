@@ -55,11 +55,11 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import {iAxios as axios} from "axios";
 
   export default {
     created() {
-      axios.defaults.baseURL = "http://localhost:2020/mini/search"
+      axios.defaults.baseURL = "https://www.freetour.top:721/mini/search"
       this.getHotList()
     },
     data() {

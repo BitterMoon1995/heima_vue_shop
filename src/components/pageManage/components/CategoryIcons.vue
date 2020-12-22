@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-upload
-      action="http://localhost:2020/upload"
+      :action="url"
       list-type="picture-card"
       accept="image/jpeg,image/png"
       :on-preview="handlePictureCardPreview"
@@ -27,6 +27,7 @@
 <script>
   import {mapGetters, mapState,mapActions,mapMutations} from "vuex"
   import imgSize from "../../../utils/imgSize";
+  import {host01Url} from "/src/config/iAxios"
 
   export default {
     data() {
@@ -37,6 +38,8 @@
 
         dialogImageUrl: '',
         dialogVisible: false,
+
+        url: host01Url+'upload'
       }
     },
     methods:{
